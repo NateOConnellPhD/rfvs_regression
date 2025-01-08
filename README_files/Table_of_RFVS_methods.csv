@@ -1,0 +1,15 @@
+Abbreviation in Paper,Publication,R package,Approach,Type of forest method,Summary
+None,Breiman 2001,ranger,N/A,Axis,No variable selection
+Svetnik,Svetnik 2004 ,"Uses party, code from Hapfelmeier",Performance Based,Conditional Inference ,Uses recursive feature elimination1 based on importance measures and k-fold validation
+Jiang,Jiang 2004,"Uses party, code from Hapfelmeier",Performance Based,Conditional Inference ,Similar to Svetnik but provides mechanism to prevent overfitting
+Caret,Kuhn 2008,caret,Performance Based,Axis,"Uses recursive feature elimination,1 criteria to remove variables based on maintaining similar error rate to full model"
+Altmann,Altmann 2010,vita,Test Based,Axis,Based on a parametric test of repeated permutations of importance measures
+Boruta,Kursa 2010,Boruta,Test Based,Axis,Based on a permutation test using a hold out approach for importance measures
+aorsf - Menze,Menze 2011,aorsf,Performance Based,Oblique ,p-values are calculated for predictors at non-leaf nodes. Variable importance is based on the proportion of time a p-value for a predictor is less than 0.01. Recursive feature elimination is applied based on this importance metric
+RRF,Deng 2013,RRF,Performance Based,Axis,"Based on a regularized random forest, which uses forward selection to sequentially add variables until there is no further information gain"
+SRC,Ishwaran 2014,randomForestSRC,Performance Based,Axis,"Calculates the minimal depth of the maximal subtree (i.e., the largest subtree whose root node splits on the predictor) for each predictor. "
+VSURF,Genuer 2015,VSURF,Performance Based,Axis,"Three step variable selection procedure. The thresholding step removes irrelevant variables. The ""interpretation step"" aims to select all variables related to the response for interpretation purpose. The prediction step refines the selection by eliminating redundancy in the set of variables selected by the second step."
+aorsf-Negation,Jaeger 2023,aorsf,Performance Based,Oblique ,Variable importance is based on prediction accuracy after negating the signs of all coefficients linked to a variable. Recursive feature elimination is applied based on this importance metric
+aorsf- Permutation,Jaeger 2023,aorsf,Performance Based,Oblique ,Variable importance is based on prediction accuracy after permuting values for a given variable. Recursive feature elimination is applied based on this importance metric
+Axis - SFE,,ranger,Test Based,Axis,Selects all variables with variable importance great than 0 based on permutation. 
+rfvimptest,Hapfelmeier 2023,rfvimptest,Test Based,Conditional Inference ,"Similar to Altmann, but uses unbiased importance measures  "

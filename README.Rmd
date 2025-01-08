@@ -1,0 +1,127 @@
+---
+output: github_document
+always_allow_html: true
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE
+)
+
+library(table.glue)
+library(tidyverse)
+library(gt)
+library(kableExtra)
+library(gridExtra)
+
+```
+
+# rfvs-regression
+
+**Note**: The following work titled *A Comparison of Random Forest Variable Selection Methods for Regression Modeling of Continuous Outcomes* by O'Connell, N.S., Jaeger, B.C., Bullock, G.S., and Speiser, J.L. is currently submitted for peer review publication. 
+
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of rfvs-regression is to compare random forest variable selection techniques for continuous outcomes. We compare several methods available through various R packages and user defined functions from published paper appendices. The code for implementing each RF variable selection approach tested can be found in the function "rfvs()" and each of the methods assessed and compared are given in the following table:
+
+<br/>
+
+```{r}
+tbl_meth <- read_csv("README_files/Table_of_RFVS_methods.csv", 
+         show_col_types = FALSE)
+tbl_meth <- as.data.frame(tbl_meth)
+
+tbl_meth[,1:5] %>% kbl() %>% kableExtra::kable_styling()
+```
+
+<br/>
+
+In this benchmarking study, we pulled datasets from *OpenML* and *modeldata* following the criteria and steps outlined below: 
+
+# Datasets included
+
+```{r}
+
+tbl <- read_csv("data/datasets_inclusion_chart.csv", 
+         show_col_types = FALSE) %>%  mutate(n=ifelse(n==76, 74, n)) %>% 
+         mutate(n= ifelse(n==61, 59, n)) %>%
+ gt(rowname_col = 'exclusion') %>% 
+ tab_footnote(locations = cells_stub(rows = 8), 
+              footnote = 'Many datasets are different versions of the same data')
+
+gtsave(tbl, filename = 'doc/gt_readme_1.png')
+
+magick::image_read("doc/gt_readme_1.png")
+
+```
+
+
+A total of 59 datasets met criteria and were used in this benchmarking study. Summary characteristics of these datasets are given in the figure below 
+
+<center>
+```{r}
+magick::image_read("README_files/figure-gfm/Figure1.tiff")
+```
+
+
+# Benchmarking Study 
+
+We used five replications of split sample validation (i.e., Monte-Carlo cross validation) for each dataset to evaluate RF variable selection methods.
+
+1. First, a dataset was split into training (75%) and testing (25%) sets.
+
+1. Second, each variable selection method was applied to the training data, and the variables selected by each method were saved. 
+
+1. Third, a standard axis-based RF model using the R package *ranger* and an oblique RF using the package *aorsf* were fit on the training data set using variables selected from each method, and R^2 was recorded based on the test data for each replication, method, and dataset. 
+
+1. Fourth, methods of variable selection were compared based on computation time, accuracy measured by R^2, and percent variable reduction
+
+*note*: If any missing values were present in the training or testing data, they were imputed prior to running variable selection methods using the mean and mode for continuous and categorical predictors, respectively, computed in the training data. 
+
+
+## Primary Results Table
+
+We provide the results in the table below for R^2 for downstream models fitted in Axis and Oblique RFs, variable percent reduction (higher % reduction implies more variables eliminated on average), and computation time (in seconds). 
+
+```{r}
+targets::tar_load(tab_main)
+tab_main
+```
+
+## Primary Results Figure
+
+We present the results of accuracy, by time, and percent reduction in the figure below. K-Means clustering was used to find the cluster of methods that perform best optimally in terms of computation time and accuracy (in the bottom right corner of the figure), with size and color denoting percent reduction. 
+
+```{r}
+magick::image_read("README_files/figure-gfm/Figure7.tiff")
+```
+
+We observe that for downstream Axis forests fitted in *ranger*, the methods of Boruta (r package: *boruta*) and aorsf-Menze (r package: *aorsf*) perform optimmaly in terms of fast computation time and high-accuracy while preserving good parsimony (good variable percent reduction). 
+
+For downstream oblique forests fitted in *aorsf*, the methods aorsf-Menze and aorsf-Permutation (both found within the *aorsf* R package) perform best in terms of computation time and accuracy. 
+
+## Sensitivity to incomplete replication
+
+We note that in several dataset replications, at least one method failed to select a single variable in variable selection. We performed a sensitivity analysis by assessing results only in replications where all methods selected at least one variable (2,464 out of 4,260)
+
+```{r}
+magick::image_read("README_files/figure-gfm/Figure8.tiff")
+```
+
+## Comparison of Axis vs Oblique fitted downstream RFs
+
+Last but not least, we compare downstream fitted Axis RFs to Oblique RFs. 
+
+```{r}
+magick::image_read("README_files/figure-gfm/Figure6.tiff")
+```
+
+We find that in terms of median accuracy, downstream oblique fitted forests generally perform slightly better than downstream Axis forests, particularly among the top performing methods of variable selection. 
