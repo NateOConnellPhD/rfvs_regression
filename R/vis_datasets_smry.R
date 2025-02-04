@@ -8,7 +8,7 @@ vis_datasets_smry <- function(df){
  p1 <- ggplot(df, (aes(x = cv))) +
   geom_histogram(binwidth = 1,
                  color = "white",
-                 fill = "black",boundary = 0) +
+                 fill = "black") +
   ggtitle(expression(Coefficient ~ of ~ Variation ~
                       bgroup("(", frac(sigma, abs(mu)), ")") ~
                       Across ~ Outcomes)) +
@@ -28,7 +28,7 @@ vis_datasets_smry <- function(df){
  p4 <- ggplot(df, aes(x = np_ratio)) +
   geom_histogram(binwidth = 25,
                  color = "white",
-                 fill = "black", boundary = 0) +
+                 fill = "black") +
   ggtitle("N:P Ratio Distribution") +
   ylab("Frequency") + xlab("N:P Ratio") +
   theme_bw() +
@@ -38,7 +38,7 @@ vis_datasets_smry <- function(df){
  p2 <- ggplot(df, aes(x = number.of.features)) +
   geom_histogram(binwidth = 25,
                  color = "white",
-                 fill = "black",boundary = 0) +
+                 fill = "black") +
   ggtitle("Number of Predictors") +
   ylab("Frequency") + xlab("Predictors") +
   theme_bw() +
@@ -48,7 +48,7 @@ vis_datasets_smry <- function(df){
  p3 <- ggplot(df, (aes(x = number.of.instances))) +
   geom_histogram(binwidth = 200,
                  color = "white",
-                 fill = "black",boundary = 0) +
+                 fill = "black") +
   ggtitle("Number of Observations") +
   ylab("Frequency") +
   xlab("Observations") +

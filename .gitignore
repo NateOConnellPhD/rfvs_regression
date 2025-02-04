@@ -63,3 +63,6 @@ Rplots
 # Figures
 figures.zip
 figures/
+
+#old r files
+R old/

@@ -57,7 +57,7 @@ vis_main_plot <- function(df, x="rsq_50", y = "time_50", z = "perc_reduced_50", 
 
  #Label data
  df$lab <- factor(df$rfvs, rfvs_key[rfvs_key$rfvs_label %in% df$rfvs,]$rfvs_label,
-                  rfvs_key[rfvs_key$rfvs_label %in% df$rfvs,]$figure_label)
+                          rfvs_key[rfvs_key$rfvs_label %in% df$rfvs,]$figure_label)
 
  x = paste("rsq_axis_", ifelse(x_stat=="Median ", "50", "mean"), sep="")
 
