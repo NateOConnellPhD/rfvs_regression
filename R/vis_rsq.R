@@ -31,7 +31,7 @@ vis_rsq <- function(df, stat="mean", z_score=F, rfvs.ignore= NULL, df.ignore=NUL
   select(rfvs, matches(paste("^rsq.*", stat, "$", sep="")), -contains('_z_')) %>%
   pivot_longer(cols = -rfvs) %>%
   mutate(name = str_extract(name, pattern = "axis|oblique"),
-         label = table_value(100 * value, rspec = rspec),
+        # label = table_value(100 * value, rspec = rspec),
          rfvs = fct_reorder(rfvs, .x = value, .fun = max)) %>%
   group_by(rfvs) %>%
   mutate(hjust = if_else(value == max(value), -0.25, 1.25))
@@ -41,18 +41,20 @@ vis_rsq <- function(df, stat="mean", z_score=F, rfvs.ignore= NULL, df.ignore=NUL
    select(rfvs, matches("_z_"))%>%
    pivot_longer(cols = -rfvs) %>%
    mutate(name = str_extract(name, pattern = "axis|oblique"),
-          label = table_value(100 * value, rspec = rspec),
+          #label = table_value(100 * value, rspec = rspec),
           rfvs = fct_reorder(rfvs, .x = value, .fun = max)) %>%
    group_by(rfvs) %>%
    mutate(hjust = if_else(value == max(value), -0.25, 1.25))
  }
+
+ data_gg$label = round(data_gg$value*100,2)
 
  data_gg$name <- factor(data_gg$name, c("axis", "oblique"), c("Axis", "Oblique"))
 
  xlim <- c(min(data_gg$value)-.02, max(data_gg$value)+.02)
 
  ggplot(data_gg) +
-  aes(x = rfvs, y = value, label = label, group = rfvs, color = name) +
+  aes(x = rfvs, y = value, group = rfvs,label=label,  color = name) +
   geom_line(color = 'grey50', alpha = 0.6) +
   geom_point() +
   geom_text(hjust = data_gg$hjust, show.legend = FALSE) +
@@ -60,7 +62,7 @@ vis_rsq <- function(df, stat="mean", z_score=F, rfvs.ignore= NULL, df.ignore=NUL
   theme(panel.grid = element_blank(),
         legend.position = c(1,0), legend.justification = c(1.2,-0.2)) +
   coord_flip() +
-  scale_y_continuous(limits= xlim, breaks=seq(from=floor(xlim[1]), to=ceiling(xlim[2]), .02), expand = c(0.01, 0.01)) +
+  scale_y_continuous(limits= xlim, breaks=seq(from=floor(xlim[1]), to=ceiling(xlim[2]), .05), expand = c(0.01, 0.01)) +
   labs(x = "Variable selection method",
        y = y_label,
        color = "Forest type")
