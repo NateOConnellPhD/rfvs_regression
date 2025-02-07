@@ -50,14 +50,14 @@ In this benchmarking study, we pulled datasets from *OpenML* and *modeldata* fol
 
 ```{r}
 
-tbl <- read_csv("data/datasets_inclusion_chart.csv", 
-         show_col_types = FALSE) %>%  mutate(n=ifelse(n==76, 74, n)) %>% 
-         mutate(n= ifelse(n==61, 59, n)) %>%
- gt(rowname_col = 'exclusion') %>% 
- tab_footnote(locations = cells_stub(rows = 8), 
-              footnote = 'Many datasets are different versions of the same data')
-
-tbl 
+# tbl <- read_csv("data/datasets_inclusion_chart.csv", 
+#          show_col_types = FALSE) %>%  mutate(n=ifelse(n==76, 74, n)) %>% 
+#          mutate(n= ifelse(n==61, 59, n)) %>%
+#  gt(rowname_col = 'exclusion') %>% 
+#  tab_footnote(locations = cells_stub(rows = 8), 
+#               footnote = 'Many datasets are different versions of the same data')
+# tbl
+magick::image_read("README_files/figure-gfm/data_selection.png")
 
 ```
 
@@ -74,7 +74,7 @@ magick::image_read("README_files/figure-gfm/Figure1.tiff")
 
 We used five replications of split sample validation (i.e., Monte-Carlo cross validation) for each dataset to evaluate RF variable selection methods.
 
-1. First, a dataset was split into training (75%) and testing (25%) sets.
+1. First, a dataset was split into training (50%) and testing (50%) sets.
 
 1. Second, each variable selection method was applied to the training data, and the variables selected by each method were saved. 
 
