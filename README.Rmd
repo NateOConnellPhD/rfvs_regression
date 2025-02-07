@@ -57,9 +57,7 @@ tbl <- read_csv("data/datasets_inclusion_chart.csv",
  tab_footnote(locations = cells_stub(rows = 8), 
               footnote = 'Many datasets are different versions of the same data')
 
-gtsave(tbl, filename = 'doc/gt_readme_1.png')
-
-magick::image_read("doc/gt_readme_1.png")
+tbl 
 
 ```
 
@@ -98,22 +96,22 @@ tab_main
 
 ## Primary Results Figure
 
-We present the results of accuracy, by time, and percent reduction in the figure below. K-Means clustering was used to find the cluster of methods that perform best optimally in terms of computation time and accuracy (in the bottom right corner of the figure), with size and color denoting percent reduction. 
+We present the results of accuracy (x-axis), by percent reduction (y-axis), and time (size and color) in the figure below.  
 
 ```{r}
-magick::image_read("README_files/figure-gfm/Figure7.tiff")
+magick::image_read("README_files/figure-gfm/Figure7new.tiff")
 ```
 
-We observe that for downstream Axis forests fitted in *ranger*, the methods of Boruta (r package: *boruta*) and aorsf-Menze (r package: *aorsf*) perform optimmaly in terms of fast computation time and high-accuracy while preserving good parsimony (good variable percent reduction). 
+We observe that for downstream Axis forests fitted in *ranger*, the methods of CARET (r packege: *caret*), Boruta (r package: *boruta*), Jiang, and aorsf-Permutation (r package: *aorsf*) perform optimally in terms of high-accuracy while preserving good parsimony (good variable percent reduction). Among them however, CARET is substantially slower on average, while Boruta, Jiang, and aorsf-Permutation are similar in accuracy and variable reduction, but substantially quicker in computation time.  
 
-For downstream oblique forests fitted in *aorsf*, the methods aorsf-Menze and aorsf-Permutation (both found within the *aorsf* R package) perform best in terms of computation time and accuracy. 
+For downstream oblique forests fitted in *aorsf*, the methods aorsf-Menze and aorsf-Permutation (both found within the *aorsf* R package) perform best in terms of computation time and accuracy, while preserving good variable reduction. 
 
 ## Sensitivity to incomplete replication
 
-We note that in several dataset replications, at least one method failed to select a single variable in variable selection. We performed a sensitivity analysis by assessing results only in replications where all methods selected at least one variable (2,464 out of 4,260)
+We note that in several dataset replications, at least one method failed to select a single variable in variable selection. We performed a sensitivity analysis by assessing results only in replications where all methods selected at least one variable (10,192 replications out of 16,520 possible). 
 
 ```{r}
-magick::image_read("README_files/figure-gfm/Figure8.tiff")
+magick::image_read("README_files/figure-gfm/Figure8new.tiff")
 ```
 
 ## Comparison of Axis vs Oblique fitted downstream RFs
@@ -124,4 +122,8 @@ Last but not least, we compare downstream fitted Axis RFs to Oblique RFs.
 magick::image_read("README_files/figure-gfm/Figure6.tiff")
 ```
 
-We find that in terms of median accuracy, downstream oblique fitted forests generally perform slightly better than downstream Axis forests, particularly among the top performing methods of variable selection. 
+We find that in terms of median accuracy, downstream oblique fitted forests generally perform better than downstream Axis forests, particularly among the top performing methods of variable selection. However, this is likely due to Oblique forest handling sparse data (N/P < 10) better than Axis forests. When we assess each stratified by N/P < or >= 10, we find that Axis and Oblique forests are much closer (with Oblique forests still performing slightly better among the top performing VS methods). 
+
+```{r}
+magick::image_read("README_files/figure-gfm/Figure9.tiff")
+```

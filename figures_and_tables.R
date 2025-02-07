@@ -1,11 +1,11 @@
 
 # update target figurs and tables
 tar_make_future(starts_with(c("fig", "tab")), workers=6, shortcut=T)
-
+tar_make("fig_main_mean_axis")
 # Load Target figures and tables
 
 tar_load(starts_with(c("fig", "results", "tab", "data")))
-tar_load("bm_comb")
+tar_load("results_cc")
 
 vis_datasets_smry(data_full)
 table(data_full$number.of.features>150)
@@ -21,33 +21,43 @@ table(data_full$number.of.features>150)
 
 ######## Figures #################
 #Dataset Characteristics Plot
+tar_load("fig_datasets_smry")
 fig1 = arrangeGrob(fig_datasets_smry)
 ggsave(file='figures/figure1.tiff',plot=fig1, width=10, height=10, dpi=300)
 
 #Table of results
+tar_load("tab_main")
 tab_main
 
 #Table for when no variables selected
+tar_load("tab_none_sel")
 tab_none_sel
 
 #Computation Time Distributions
+tar_load("fig_log_time")
+tar_load("fig_log_time_z")
 fig2 = arrangeGrob(fig_log_time, fig_log_time_z,
              layout_matrix=matrix(c(1,2), ncol=1, byrow=T))
 ggsave(file='figures/figure2.tiff',plot=fig2, width=10, height=8, dpi=300)
 
 
 #Computation Percetn Reduced distributions
+tar_load("fig_perc_reduced")
+tar_load("fig_perc_reduced_z")
 fig3 = arrangeGrob(fig_perc_reduced, fig_perc_reduced_z,
              layout_matrix=matrix(c(1,2), ncol=1, byrow=T))
 ggsave(file='figures/figure3.tiff',plot=fig3, width=10, height=8, dpi=300)
 
 
 #Computation R-square Reduced distributions
+tar_load("fig_rsq_axis")
+tar_load("fig_rsq_z_axis")
 fig4 = arrangeGrob(fig_rsq_axis, fig_rsq_z_axis,
              layout_matrix=matrix(c(1,2), ncol=1, byrow=T))
 ggsave(file='figures/figure4.tiff',plot=fig4, width=10, height=8, dpi=300)
 
-
+tar_load("fig_rsq_oblique")
+tar_load("fig_rsq_z_oblique")
 fig5 = arrangeGrob(fig_rsq_oblique, fig_rsq_z_oblique,
              layout_matrix=matrix(c(1,2), ncol=1, byrow=T))
 
@@ -56,6 +66,8 @@ ggsave(file='figures/figure5.tiff',plot=fig5, width=10, height=8, dpi=300)
 #Figures Mean and Median Rsq
 fig_rsq_median
 fig_rsq_means
+tar_load("fig_rsq_median")
+tar_load("fig_rsq_means")
 
 t1<- ggplot() +
  annotate("text", x = 4, y = 25, size=6,
@@ -73,19 +85,22 @@ ggsave(file='figures/figure6.tiff',plot=fig6, width=8, height=12, dpi=300)
 
 
 #Main Figure Median
+tar_load("fig_main_median")
 fig7 = arrangeGrob(fig_main_median)
 ggsave(file='figures/figure7.tiff',plot=fig7, width=11, height=13, dpi=300)
 
+tar_load("fig_main_median2")
 fig7new = arrangeGrob(fig_main_median2)
 ggsave(file='figures/figure7new.tiff',plot=fig7new, width=9, height=13, dpi=300)
 
 #Maing figure median complete case
+tar_load("fig_main_median_cc")
 fig8 = arrangeGrob(fig_main_median_cc)
 ggsave(file='figures/figure8.tiff',plot=fig8, width=11, height=13, dpi=300)
 
+tar_load("fig_main_median2_cc")
 fig8new = arrangeGrob(fig_main_median2_cc)
 ggsave(file='figures/figure8new.tiff',plot=fig8new, width=9, height=13, dpi=300)
-
 
 #Main figure Mean
 grid.arrange(fig_main_mean)
@@ -94,6 +109,8 @@ grid.arrange(fig_main_mean)
 grid.arrange(fig_main_median_cc)
 
 #Mean and Median; high and low
+tar_load("fig_rsq_median_pn_high")
+tar_load("fig_rsq_median_pn_low")
 t1<- ggplot() +
  annotate("text", x = 4, y = 25, size=6,
           label = "N:P < 10", color = "black", fontface="italic") +
