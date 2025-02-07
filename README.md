@@ -301,25 +301,30 @@ below
 
 # Benchmarking Study
 
-We used five replications of split sample validation (i.e., Monte-Carlo
+We used 20 replications of split sample validation (i.e., Monte-Carlo
 cross validation) for each dataset to evaluate RF variable selection
 methods.
 
 1.  First, a dataset was split into training (50%) and testing (50%)
-    sets.
+    sets for all data sets with \<2000 observations. For datasets with
+    \>2000 observations, 1000 observations were selected at random as
+    the training set. This was done for computational time purposes; the
+    largest datasets would take over 10 days for one replication/method.
 
 2.  Second, each variable selection method was applied to the training
     data, and the variables selected by each method were saved.
 
+- Note: For datasets with more than 150 predictors, a subset of 150 predictors were selected at random to serve as the variables for that replication
+
 3.  Third, a standard axis-based RF model using the R package *ranger*
     and an oblique RF using the package *aorsf* were fit on the training
-    data set using variables selected from each method, and R^2 was
-    recorded based on the test data for each replication, method, and
-    dataset.
+    data set using variables selected from each method, and R-squared
+    was recorded based on the test data for each replication, method,
+    and dataset.
 
 4.  Fourth, methods of variable selection were compared based on
-    computation time, accuracy measured by R^2, and percent variable
-    reduction
+    computation time, accuracy measured by R-squared, and percent
+    variable reduction
 
 *note*: If any missing values were present in the training or testing
 data, they were imputed prior to running variable selection methods
@@ -328,10 +333,10 @@ respectively, computed in the training data.
 
 ## Primary Results Table
 
-We provide the results in the table below for R^2 for downstream models
-fitted in Axis and Oblique RFs, variable percent reduction (higher %
-reduction implies more variables eliminated on average), and computation
-time (in seconds).
+We provide the results in the table below for R-squared for downstream
+models fitted in Axis and Oblique RFs, variable percent reduction
+(higher % reduction implies more variables eliminated on average), and
+computation time (in seconds).
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
