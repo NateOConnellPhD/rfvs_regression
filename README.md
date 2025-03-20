@@ -3,13 +3,16 @@
 
 # rfvs-regression
 
-**Note**: The following work titled *A Comparison of Random Forest
-Variable Selection Methods for Regression Modeling of Continuous
-Outcomes* by O’Connell, N.S., Jaeger, B.C., Bullock, G.S., and Speiser,
-J.L. is currently submitted for peer review publication.
+**Citation for this work**: Nathaniel S O’Connell, Byron C Jaeger,
+Garrett S Bullock, Jaime Lynn Speiser, A comparison of random forest
+variable selection methods for regression modeling of continuous
+outcomes, *Briefings in Bioinformatics*, Volume 26, Issue 2, March 2025,
+bbaf096, <https://doi.org/10.1093/bib/bbaf096>
 
 <!-- badges: start -->
 <!-- badges: end -->
+
+## Overview
 
 The goal of rfvs-regression is to compare random forest variable
 selection techniques for continuous outcomes. We compare several methods
